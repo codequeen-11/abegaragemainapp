@@ -2,8 +2,7 @@
 const conn = require("../Config/db.config");
 // Import the bcrypt module 
 const bcrypt = require('bcrypt');
-// import connect function from db.config.js
-const Conn = require("../Config/db.config");
+
 // A function to check if employee exists in the database 
 async function checkIfEmployeeExists(email) {
   const query = "SELECT * FROM employee WHERE employee_email = ? ";
@@ -55,14 +54,29 @@ async function createEmployee(employee) {
  // a function to get employee by email
     const getEmployeeByEmail = async (employee_email) => {
         const query = "select * from employee INNER JOIN employee_info ON employee.employee_id = employee_info.employee_id INNER JOIN employee_pass ON employee.employee_id = employee_pass.employee_id INNER JOIN employee_role ON employee.employee_id = employee_role.employee_id WHERE employee.employee_email = ? ";
-        const rows = await Conn.query(query, [employee_email]);
+        const rows = await conn.query(query, [employee_email]);
         return rows;
     }
+// 
+    // a function to get all employees
+    async function getAllEmployees() {
+      const query = "select * from employee INNER JOIN employee_info ON employee.employee_id = employee_info.employee_id INNER JOIN employee_role ON employee.employee_id = employee_role.employee_id INNER JOIN company_roles ON employee_role.company_role_id = company_roles.company_role_id ORDER BY employee.employee_id DESC ";
+      const rows = await conn.query(query);
+      return rows;
+    }
 
-
+ 
 // Export the functions for use in the controller
 module.exports = {
   checkIfEmployeeExists,
   createEmployee,
-  getEmployeeByEmail
+  getEmployeeByEmail,
+  getAllEmployees
 };
+
+
+
+
+
+
+  
