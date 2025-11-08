@@ -12,16 +12,26 @@ const createEmployee = async (formData, loggedInEmployeeToken) =>
     },
     body: JSON.stringify(formData)
 }
-     
-
     console.log(requestOptions);
     const response = await fetch(`${api_url}/api/employee`,requestOptions);
     
     return response;
     }
-
+    // a function to send get request to get all employees
+    const getAllEmployees = async (token) =>{
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': token
+        },
+    }
+        const response = await fetch(`${api_url}/api/employee`,requestOptions);
+        return response;
+    }
 // export
 const employeeService={
     createEmployee,
+    getAllEmployees
 }
 export default employeeService;
