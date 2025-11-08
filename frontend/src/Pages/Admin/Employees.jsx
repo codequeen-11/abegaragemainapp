@@ -10,6 +10,7 @@ function Employees() {
   const {isLogged, isAdmin} = useAuth();
 
   if (isLogged){
+    console.log(kabe)
     if (isAdmin){
       return (
         
